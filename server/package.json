@@ -13,6 +13,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.14",
     "concurrently": "^9.1.2",
@@ -21,8 +22,14 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "better-sqlite3": "^11.9.1",
+    "bindings": "^1.5.0",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "sqlite3": "^5.1.7"
+    "express": "^4.21.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }
