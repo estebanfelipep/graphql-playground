@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -45,6 +46,11 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
 };
 
+export type BookQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BookQueryQuery = { __typename?: 'Query', books?: Array<{ __typename?: 'Book', title?: string | null } | null> | null };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -63,3 +69,11 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
+
+export const BookQueryDocument = new TypedDocumentString(`
+    query BookQuery {
+  books {
+    title
+  }
+}
+    `) as unknown as TypedDocumentString<BookQueryQuery, BookQueryQueryVariables>;

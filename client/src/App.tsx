@@ -1,19 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import viteLogo from '/vite.svg';
+
+import '@/App.css';
+
+import { graphql } from '@/lib/codegen/graphql';
+import fetchGraphQl from '@/lib/utils/fetchGraphQl';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const makeCall = async () => {
+      const FirstWordQuery = graphql(`
+        query BookQuery {
+          books {
+            title
+          }
+        }
+      `);
+
+      try {
+        const response = await fetchGraphQl(FirstWordQuery);
+        console.log({ response });
+
+        if (response && response.books && response.books.length > 0) {
+          const firstWord = response.books[0]?.title;
+          console.log(firstWord);
+        } else {
+          console.log('No books found in response');
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    makeCall();
+  }, []);
 
   return (
     <>
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
       <h1>Vite + React</h1>
@@ -29,7 +57,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
