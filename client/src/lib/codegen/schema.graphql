@@ -1,0 +1,24 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type AddBookMutationResponse {
+  book: Book
+  code: String!
+  message: String!
+  success: Boolean!
+}
+
+type Book {
+  author: String
+  title: String
+}
+
+type Mutation {
+  addBook(author: String, title: String): AddBookMutationResponse
+}
+
+type Query {
+  books: [Book]
+}
