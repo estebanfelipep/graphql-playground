@@ -1,4 +1,4 @@
-import db from './db.js'
+import db from './db'
 
 export const initDb = () => {
   // Create categories table

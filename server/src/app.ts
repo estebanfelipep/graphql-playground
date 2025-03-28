@@ -1,4 +1,4 @@
-import { initDb, getTransactions, getAccounts } from './lib/db/index.js'
+import { initDb, getTransactions, getAccounts } from '@/lib/db'
 
 console.log('log 222221!1!')
 
@@ -14,7 +14,7 @@ if (shouldInitDb) {
 }
 
 const transactions = getTransactions()
-console.log({ transactions })
+console.log('12222!!!', { transactions })
 
 const accounts = getAccounts()
 console.log({ accounts })

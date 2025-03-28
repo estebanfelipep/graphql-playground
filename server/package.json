@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "start": "node dist/app.js",
-    "dev": "tsc && concurrently --kill-others \"tsc -w\" \"nodemon dist/app.js\""
+    "dev": "tsx watch src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +16,8 @@
     "@types/better-sqlite3": "^7.6.12",
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.14",
-    "concurrently": "^9.1.2",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.11",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "dependencies": {

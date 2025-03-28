@@ -1,6 +1,6 @@
-export { initDb } from './init.js'
-import db from './db.js'
-import { Transaction } from './types.js'
+export { initDb } from './init'
+import db from './db'
+import { Transaction } from './types'
 
 export const getTransactions = () => {
   const stmt = db.prepare(`
