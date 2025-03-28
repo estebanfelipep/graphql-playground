@@ -49,7 +49,7 @@ export type Query = {
 export type BookQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BookQueryQuery = { __typename?: 'Query', books?: Array<{ __typename?: 'Book', title?: string | null } | null> | null };
+export type BookQueryQuery = { __typename?: 'Query', books?: Array<{ __typename?: 'Book', title?: string | null, author?: string | null } | null> | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -74,6 +74,7 @@ export const BookQueryDocument = new TypedDocumentString(`
     query BookQuery {
   books {
     title
+    author
   }
 }
     `) as unknown as TypedDocumentString<BookQueryQuery, BookQueryQueryVariables>;

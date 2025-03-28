@@ -1,62 +1,16 @@
-import { useEffect, useState } from 'react';
-import viteLogo from '/vite.svg';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import '@/App.css';
 
-import { graphql } from '@/lib/codegen/graphql';
-import fetchGraphQl from '@/lib/utils/fetchGraphQl';
+import Main from '@/components/Main';
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const makeCall = async () => {
-      const FirstWordQuery = graphql(`
-        query BookQuery {
-          books {
-            title
-          }
-        }
-      `);
-
-      try {
-        const response = await fetchGraphQl(FirstWordQuery);
-        console.log({ response });
-
-        if (response && response.books && response.books.length > 0) {
-          const firstWord = response.books[0]?.title;
-          console.log(firstWord);
-        } else {
-          console.log('No books found in response');
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    makeCall();
-  }, []);
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Main />
+    </QueryClientProvider>
   );
 }
 
