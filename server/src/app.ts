@@ -1,6 +1,15 @@
 import { initDb, getTransactions, getAccounts } from '@/lib/db'
-import { ApolloServer } from '@apollo/server'
+import { ApolloServer, BaseContext } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
+import { readFileSync } from 'fs'
+import { Resolvers } from '@/lib/codegen/__generated__/resolvers-types'
+
+// Note: this uses a path relative to the project's
+// root directory, which is the current working directory
+// if the server is executed using `npm run`.
+const typeDefs = readFileSync('./lib/codegen/schema.graphql', {
+  encoding: 'utf-8'
+})
 
 console.log('log 222221!1!')
 
@@ -21,49 +30,24 @@ console.log('12222!!!', { transactions })
 const accounts = getAccounts()
 console.log({ accounts })
 
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
-  }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    books: [Book]
-  }
-`
-
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin'
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster'
-  }
-]
-
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
-    books: () => books
+    books: () => {
+      return [
+        {
+          title: 'The Awakening',
+          author: 'Kate Chopin'
+        }
+      ]
+    }
   }
 }
 
-const server = new ApolloServer({
+const server = new ApolloServer<BaseContext>({
   typeDefs,
   resolvers
 })
 
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 }
 })

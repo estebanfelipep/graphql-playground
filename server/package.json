@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
+    "generate": "graphql-codegen --config src/lib/codegen/codegen.ts",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "start": "node dist/app.js",
     "dev": "tsx watch src/app.ts"
@@ -13,6 +14,9 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-resolvers": "^4.5.0",
     "@types/better-sqlite3": "^7.6.12",
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.14",
