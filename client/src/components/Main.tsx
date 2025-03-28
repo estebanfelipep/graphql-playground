@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  useQuery,
-  // useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { graphql } from '@/lib/codegen/graphql';
 import fetchGraphQl from '@/lib/utils/fetchGraphQl';
@@ -18,7 +15,6 @@ const BooksQuery = graphql(`
 
 function App() {
   const [count, setCount] = useState(0);
-  // const queryClient = useQueryClient();
 
   // Queries
   const { data } = useQuery({
