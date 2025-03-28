@@ -26,7 +26,11 @@
         "name": "@0no-co/graphqlsp",
         "schema": "./src/lib/codegen/schema.graphql"
       }
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
   },
   "include": ["src"]
 }
