@@ -4,13 +4,13 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx}\" \"!**/__generated__/**\"",
-    "generate": "graphql-codegen --config src/lib/codegen/codegen.ts",
-    "generate:watch": "pnpm generate --watch src/**/*.ts",
+    "dev": "concurrently --names \"codegen,tsx\" -c \"bgMagenta.white,bgBlack.white\" \"pnpm generate:watch\" \"pnpm dev:base\"",
+    "dev:base": "tsx watch src/app.ts",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "start": "node dist/app.js",
-    "dev:base": "tsx watch src/app.ts",
-    "dev": "concurrently --names \"codegen,tsx\" -c \"bgMagenta.white,bgBlack.white\" \"pnpm generate:watch\" \"pnpm dev:base\""
+    "generate:watch": "pnpm generate --watch src/**/*.ts",
+    "generate": "graphql-codegen --config src/lib/codegen/codegen.ts",
+    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx}\" \"!**/__generated__/**\""
   },
   "keywords": [],
   "author": "",
