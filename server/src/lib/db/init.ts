@@ -9,7 +9,7 @@ export const initDb = () => {
       name TEXT NOT NULL,
       description TEXT
    )
-`
+`,
   ).run()
 
   // Create accounts table
@@ -20,7 +20,7 @@ export const initDb = () => {
       name TEXT NOT NULL,
       isDefault BOOLEAN NOT NULL DEFAULT 0
    )
-`
+`,
   ).run()
 
   // Create transactions table
@@ -34,7 +34,7 @@ export const initDb = () => {
       categoryId INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
       accountId INTEGER NOT NULL REFERENCES accounts(id) ON DELETE CASCADE
    )
-`
+`,
   ).run()
 
   // Create default categories
@@ -45,7 +45,7 @@ export const initDb = () => {
     ('Food', 'All food expenses'),
     ('Transport', 'All transport expenses'),
     ('Salary', 'All salary incomes')
-`
+`,
   ).run()
 
   // Create default accounts
@@ -55,6 +55,6 @@ export const initDb = () => {
   VALUES
     ('Cash', 1),
     ('Card', 0)
-`
+`,
   ).run()
 }

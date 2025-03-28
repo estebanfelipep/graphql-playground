@@ -1,6 +1,7 @@
-export { initDb } from './init'
 import db from './db'
 import { Transaction } from './types'
+
+export { initDb } from './init'
 
 export const getTransactions = () => {
   const statement = db.prepare(`
