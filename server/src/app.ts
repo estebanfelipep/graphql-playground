@@ -7,7 +7,7 @@ import { Resolvers } from '@/lib/codegen/__generated__/resolvers-types'
 // Note: this uses a path relative to the project's
 // root directory, which is the current working directory
 // if the server is executed using `npm run`.
-const typeDefs = readFileSync('./lib/codegen/schema.graphql', {
+const typeDefs = readFileSync('./src/lib/codegen/schema.graphql', {
   encoding: 'utf-8'
 })
 
