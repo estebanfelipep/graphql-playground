@@ -3,25 +3,25 @@ import db from './db'
 import { Transaction } from './types'
 
 export const getTransactions = () => {
-  const stmt = db.prepare(`
+  const statement = db.prepare(`
     SELECT *
     FROM transactions
   `)
-  return stmt.all()
+  return statement.all()
 }
 
 export const getAccounts = () => {
-  const stmt = db.prepare(`
+  const statement = db.prepare(`
     SELECT *
     FROM accounts
   `)
-  return stmt.all()
+  return statement.all()
 }
 
 export const createTransaction = (transaction: Transaction) => {
-  const stmt = db.prepare(`
+  const statement = db.prepare(`
     INSERT INTO transactions (title, amount, date, categoryId, accountId)
     VALUES (@title, @amount, @date, @categoryId, @accountId)
   `)
-  return stmt.run(transaction)
+  return statement.run(transaction)
 }
