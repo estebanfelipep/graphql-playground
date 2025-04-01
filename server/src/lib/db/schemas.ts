@@ -30,6 +30,11 @@ export const createCategorySchema = categorySchema.omit({ id: true })
 export const createAccountSchema = accountSchema.omit({ id: true })
 export const createTransactionSchema = transactionSchema.omit({ id: true })
 
+// Input schemas (for updating records)
+export const updateCategorySchema = createCategorySchema.partial()
+export const updateAccountSchema = createAccountSchema.partial()
+export const updateTransactionSchema = createTransactionSchema.partial()
+
 // Type definitions (can use instead of your current types)
 export type Category = z.infer<typeof categorySchema>
 export type Account = z.infer<typeof accountSchema>

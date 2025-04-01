@@ -102,13 +102,8 @@ export type MutationUpdateCategoryArgs = {
 
 
 export type MutationUpdateTransactionArgs = {
-  accountId?: InputMaybe<Scalars['Int']['input']>;
-  amount?: InputMaybe<Scalars['Float']['input']>;
-  categoryId?: InputMaybe<Scalars['Int']['input']>;
-  date?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['Int']['input'];
-  title?: InputMaybe<Scalars['String']['input']>;
+  transaction: UpdateTransaction;
 };
 
 export type Query = {
@@ -147,6 +142,15 @@ export type Transaction = {
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   title?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateTransaction = {
+  accountId?: InputMaybe<Scalars['Int']['input']>;
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -230,6 +234,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Transaction: ResolverTypeWrapper<Transaction>;
+  UpdateTransaction: UpdateTransaction;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -244,6 +249,7 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   Transaction: Transaction;
+  UpdateTransaction: UpdateTransaction;
 };
 
 export type AccountResolvers<ContextType = any, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
@@ -271,7 +277,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteTransaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationDeleteTransactionArgs, 'id'>>;
   updateAccount?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<MutationUpdateAccountArgs, 'id'>>;
   updateCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationUpdateCategoryArgs, 'id'>>;
-  updateTransaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationUpdateTransactionArgs, 'id'>>;
+  updateTransaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationUpdateTransactionArgs, 'id' | 'transaction'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {

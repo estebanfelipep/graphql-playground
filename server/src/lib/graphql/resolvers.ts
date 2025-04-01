@@ -1,4 +1,4 @@
-import { createTransactionSchema } from '../db/schemas'
+import { createTransactionSchema, updateTransactionSchema } from '../db/schemas'
 
 import { Resolvers } from '@/lib/codegen/__generated__/resolvers-types'
 import {
@@ -7,6 +7,7 @@ import {
   getCategories,
   getTransactionById,
   getTransactions,
+  updateTransaction,
 } from '@/lib/db'
 
 const resolvers: Resolvers = {
@@ -76,16 +77,12 @@ const resolvers: Resolvers = {
   },
   Mutation: {
     createTransaction: (parent, args) => {
-      const { title, amount, date, description, categoryId, accountId } =
-        args.transaction
+      const { amount, date } = args.transaction
 
       const newTransaction = {
-        title,
-        description,
         amount: amount ? amount : 0,
         date: date ? new Date(date) : new Date().toISOString(),
-        categoryId,
-        accountId,
+        ...args.transaction,
       }
 
       const {
@@ -104,6 +101,29 @@ const resolvers: Resolvers = {
         ...validData,
         id: Number(dbResult.lastInsertRowid),
       }
+    },
+    updateTransaction: (parent, args) => {
+      const { id, transaction: fieldsToUpdate } = args
+
+      const {
+        success,
+        error,
+        data: validData,
+      } = updateTransactionSchema.safeParse(fieldsToUpdate)
+
+      if (!success) {
+        throw new Error(`Invalid input: ${error}`)
+      }
+
+      updateTransaction(id, validData)
+
+      const updatedTransaction = getTransactionById(id)
+
+      if (!updatedTransaction) {
+        throw new Error(`Transaction with id ${id} not found`)
+      }
+
+      return updatedTransaction
     },
   },
 }

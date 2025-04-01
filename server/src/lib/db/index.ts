@@ -1,4 +1,5 @@
 import db from './db'
+import getSqlFields from './getSqlFields'
 import { Account, Category, CreateTransaction, Transaction } from './schemas'
 
 export { initDb } from './init'
@@ -22,6 +23,36 @@ export const getTransactionById = (id: number) => {
   return transaction
 }
 
+export const createTransaction = (transaction: CreateTransaction) => {
+  const fieldNames = getSqlFields({ format: 'names', fields: transaction })
+  const fieldMapNames = getSqlFields({ format: 'mapName', fields: transaction })
+
+  const statement = db.prepare(`
+    INSERT INTO transactions (${fieldNames})
+    VALUES (${fieldMapNames})
+  `)
+
+  return statement.run(transaction)
+}
+
+export const updateTransaction = (
+  id: number,
+  transaction: Partial<CreateTransaction>,
+) => {
+  const fieldsMap = getSqlFields({
+    format: 'map',
+    fields: transaction,
+  })
+
+  const statement = db.prepare(`
+    UPDATE transactions
+    SET ${fieldsMap}
+    WHERE id = @id
+  `)
+
+  return statement.run({ ...transaction, id })
+}
+
 export const getAccounts = () => {
   const statement = db.prepare(`
     SELECT *
@@ -36,12 +67,4 @@ export const getCategories = () => {
     FROM categories
   `)
   return statement.all() as Category[]
-}
-
-export const createTransaction = (transaction: CreateTransaction) => {
-  const statement = db.prepare(`
-    INSERT INTO transactions (title, description, amount, date, categoryId, accountId)
-    VALUES (@title, @description, @amount, @date, @categoryId, @accountId)
-  `)
-  return statement.run(transaction)
 }

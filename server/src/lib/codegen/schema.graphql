@@ -48,17 +48,18 @@ input CreateTransaction {
   accountId: Int!
 }
 
+input UpdateTransaction {
+  title: String
+  description: String
+  amount: Float
+  date: String
+  categoryId: Int
+  accountId: Int
+}
+
 type Mutation {
   createTransaction(transaction: CreateTransaction!): Transaction
-  updateTransaction(
-    id: Int!
-    title: String
-    description: String
-    amount: Float
-    date: String
-    categoryId: Int
-    accountId: Int
-  ): Transaction
+  updateTransaction(id: Int!, transaction: UpdateTransaction!): Transaction
   deleteTransaction(id: Int!): Transaction
 
   createCategory(name: String, description: String): Category
