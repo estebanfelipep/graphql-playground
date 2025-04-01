@@ -2,7 +2,7 @@
 
 type Transaction {
   id: Int!
-  title: String!
+  title: String
   description: String
   amount: Float!
   date: String!
@@ -34,6 +34,37 @@ type Query {
   transactions: [Transaction]
   categories: [Category]
   accounts: [Account]
+}
+
+input CreateTransaction {
+  title: String
+  description: String
+  amount: Float
+  date: String
+  categoryId: Int!
+  accountId: Int!
+}
+
+type Mutation {
+  createTransaction(transaction: CreateTransaction!): Transaction
+  updateTransaction(
+    id: Int!
+    title: String
+    description: String
+    amount: Float
+    date: String
+    categoryId: Int
+    accountId: Int
+  ): Transaction
+  deleteTransaction(id: Int!): Transaction
+
+  createCategory(name: String, description: String): Category
+  updateCategory(id: Int!, name: String, description: String): Category
+  deleteCategory(id: Int!): Category
+
+  createAccount(name: String, isDefault: Boolean): Account
+  updateAccount(id: Int!, name: String, isDefault: Boolean): Account
+  deleteAccount(id: Int!): Account
 }
 
 # type AddBookMutationResponse {

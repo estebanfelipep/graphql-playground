@@ -1,6 +1,12 @@
-import { getAccounts, getCategories, getTransactions } from '../db'
+import { createTransactionSchema } from '../db/schemas'
 
 import { Resolvers } from '@/lib/codegen/__generated__/resolvers-types'
+import {
+  createTransaction,
+  getAccounts,
+  getCategories,
+  getTransactions,
+} from '@/lib/db'
 
 const resolvers: Resolvers = {
   Query: {
@@ -56,6 +62,38 @@ const resolvers: Resolvers = {
       )
 
       return transactions.length > 0 ? transactions : null
+    },
+  },
+  Mutation: {
+    createTransaction: (parent, args) => {
+      const { title, amount, date, description, categoryId, accountId } =
+        args.transaction
+
+      const newTransaction = {
+        title,
+        amount: amount ? amount : 0,
+        date: date ? new Date(date) : new Date().toISOString(),
+        categoryId,
+        accountId,
+        description,
+      }
+
+      const {
+        success,
+        error,
+        data: validData,
+      } = createTransactionSchema.safeParse(newTransaction)
+
+      if (!success) {
+        throw new Error(`Invalid input: ${error}`)
+      }
+
+      const dbResult = createTransaction(validData)
+
+      return {
+        ...validData,
+        id: Number(dbResult.lastInsertRowid),
+      }
     },
   },
 }

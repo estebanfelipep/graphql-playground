@@ -1,5 +1,5 @@
 import db from './db'
-import { Account, Category, Transaction } from './types'
+import { Account, Category, CreateTransaction, Transaction } from './schemas'
 
 export { initDb } from './init'
 
@@ -27,10 +27,10 @@ export const getCategories = () => {
   return statement.all() as Category[]
 }
 
-export const createTransaction = (transaction: Transaction) => {
+export const createTransaction = (transaction: CreateTransaction) => {
   const statement = db.prepare(`
-    INSERT INTO transactions (title, amount, date, categoryId, accountId)
-    VALUES (@title, @amount, @date, @categoryId, @accountId)
+    INSERT INTO transactions (title, description, amount, date, categoryId, accountId)
+    VALUES (@title, @description, @amount, @date, @categoryId, @accountId)
   `)
   return statement.run(transaction)
 }
