@@ -17,7 +17,7 @@ export const accountSchema = z.object({
 // Transaction schema
 export const transactionSchema = z.object({
   id: z.number().int().positive(),
-  title: z.string().min(1).optional(),
+  title: z.string().optional(),
   description: z.string().optional(),
   amount: z.number(),
   date: z.string(), // ISO date string format

@@ -11,6 +11,17 @@ export const getTransactions = () => {
   return statement.all() as Transaction[]
 }
 
+export const getTransactionById = (id: number) => {
+  const statement = db.prepare(`
+    SELECT *
+    FROM transactions
+    WHERE id = ?
+  `)
+  const transaction = statement.get(id) as Transaction | undefined
+
+  return transaction
+}
+
 export const getAccounts = () => {
   const statement = db.prepare(`
     SELECT *

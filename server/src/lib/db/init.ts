@@ -63,7 +63,7 @@ const createTransactionsTable = () => {
     `
   CREATE TABLE IF NOT EXISTS transactions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
+      title TEXT,
       description TEXT,
       amount REAL NOT NULL,
       date TEXT NOT NULL,

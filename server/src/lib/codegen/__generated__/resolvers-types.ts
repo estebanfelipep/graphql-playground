@@ -113,9 +113,27 @@ export type MutationUpdateTransactionArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  account?: Maybe<Account>;
   accounts?: Maybe<Array<Maybe<Account>>>;
   categories?: Maybe<Array<Maybe<Category>>>;
+  category?: Maybe<Category>;
+  transaction?: Maybe<Transaction>;
   transactions?: Maybe<Array<Maybe<Transaction>>>;
+};
+
+
+export type QueryAccountArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryCategoryArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryTransactionArgs = {
+  id: Scalars['Int']['input'];
 };
 
 export type Transaction = {
@@ -257,8 +275,11 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<QueryAccountArgs, 'id'>>;
   accounts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Account']>>>, ParentType, ContextType>;
   categories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategoryArgs, 'id'>>;
+  transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionArgs, 'id'>>;
   transactions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Transaction']>>>, ParentType, ContextType>;
 };
 

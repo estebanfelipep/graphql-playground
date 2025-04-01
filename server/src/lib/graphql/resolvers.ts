@@ -5,6 +5,7 @@ import {
   createTransaction,
   getAccounts,
   getCategories,
+  getTransactionById,
   getTransactions,
 } from '@/lib/db'
 
@@ -12,6 +13,16 @@ const resolvers: Resolvers = {
   Query: {
     transactions: () => {
       return getTransactions()
+    },
+    transaction: (parent, args) => {
+      const { id } = args
+      const transaction = getTransactionById(id)
+
+      if (!transaction) {
+        throw new Error(`Transaction with id ${id} not found`)
+      }
+
+      return transaction
     },
     categories: () => {
       return getCategories()
@@ -22,7 +33,6 @@ const resolvers: Resolvers = {
   },
   Transaction: {
     category: (parent) => {
-      console.log('log', parent)
       const { categoryId } = parent
 
       const category = getCategories().find(
@@ -71,11 +81,11 @@ const resolvers: Resolvers = {
 
       const newTransaction = {
         title,
+        description,
         amount: amount ? amount : 0,
         date: date ? new Date(date) : new Date().toISOString(),
         categoryId,
         accountId,
-        description,
       }
 
       const {

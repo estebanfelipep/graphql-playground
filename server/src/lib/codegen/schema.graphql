@@ -32,8 +32,11 @@ type Account {
 # clients can execute, along with the return type for each.
 type Query {
   transactions: [Transaction]
+  transaction(id: Int!): Transaction
   categories: [Category]
+  category(id: Int!): Category
   accounts: [Account]
+  account(id: Int!): Account
 }
 
 input CreateTransaction {
@@ -66,14 +69,3 @@ type Mutation {
   updateAccount(id: Int!, name: String, isDefault: Boolean): Account
   deleteAccount(id: Int!): Account
 }
-
-# type AddBookMutationResponse {
-#   code: String!
-#   success: Boolean!
-#   message: String!
-#   book: Book
-# }
-
-# type Mutation {
-#   addBook(title: String, author: String): AddBookMutationResponse
-# }
