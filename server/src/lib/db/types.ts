@@ -1,7 +1,7 @@
 export type Category = {
   id: number
   name: string
-  description: string | null
+  description?: string
 }
 
 export type Account = {
@@ -13,6 +13,7 @@ export type Account = {
 export type Transaction = {
   id: number
   title: string
+  description?: string
   amount: number
   date: string // ISO date string format
   categoryId: number

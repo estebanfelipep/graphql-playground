@@ -1,25 +1,48 @@
 # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-# This "Book" type defines the queryable fields for every book in our data source.
-type Book {
-  title: String
-  author: String
+type Transaction {
+  id: Int!
+  title: String!
+  description: String
+  amount: Float!
+  date: String!
+
+  categoryId: Int!
+  category: Category
+
+  accountId: Int!
+  account: Account
+}
+
+type Category {
+  id: Int!
+  name: String!
+  description: String
+  transactions: [Transaction]
+}
+
+type Account {
+  id: Int!
+  name: String!
+  isDefault: Boolean!
+  transactions: [Transaction]
 }
 
 # The "Query" type is special: it lists all of the available queries that
-# clients can execute, along with the return type for each. In this
-# case, the "books" query returns an array of zero or more Books (defined above).
+# clients can execute, along with the return type for each.
 type Query {
-  books: [Book]
+  transactions: [Transaction]
+  categories: [Category]
+  accounts: [Account]
 }
 
-type AddBookMutationResponse {
-  code: String!
-  success: Boolean!
-  message: String!
-  book: Book
-}
+# type AddBookMutationResponse {
+#   code: String!
+#   success: Boolean!
+#   message: String!
+#   book: Book
+# }
 
-type Mutation {
-  addBook(title: String, author: String): AddBookMutationResponse
-}
+# type Mutation {
+#   addBook(title: String, author: String): AddBookMutationResponse
+# }

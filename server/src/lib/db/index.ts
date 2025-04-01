@@ -1,5 +1,5 @@
 import db from './db'
-import { Transaction } from './types'
+import { Account, Category, Transaction } from './types'
 
 export { initDb } from './init'
 
@@ -8,7 +8,7 @@ export const getTransactions = () => {
     SELECT *
     FROM transactions
   `)
-  return statement.all()
+  return statement.all() as Transaction[]
 }
 
 export const getAccounts = () => {
@@ -16,7 +16,15 @@ export const getAccounts = () => {
     SELECT *
     FROM accounts
   `)
-  return statement.all()
+  return statement.all() as Account[]
+}
+
+export const getCategories = () => {
+  const statement = db.prepare(`
+    SELECT *
+    FROM categories
+  `)
+  return statement.all() as Category[]
 }
 
 export const createTransaction = (transaction: Transaction) => {

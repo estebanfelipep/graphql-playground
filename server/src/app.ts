@@ -2,8 +2,8 @@ import { readFileSync } from 'fs'
 import { ApolloServer, BaseContext } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
 
-import { Resolvers } from '@/lib/codegen/__generated__/resolvers-types'
-import { getAccounts, getTransactions, initDb } from '@/lib/db'
+import { getAccounts, getCategories, getTransactions, initDb } from '@/lib/db'
+import resolvers from '@/lib/graphql/resolvers'
 
 // Note: this uses a path relative to the project's
 // root directory, which is the current working directory
@@ -11,12 +11,6 @@ import { getAccounts, getTransactions, initDb } from '@/lib/db'
 const typeDefs = readFileSync('./src/lib/codegen/schema.graphql', {
   encoding: 'utf-8',
 })
-
-console.log('log 222221!1!')
-
-setTimeout(() => {
-  console.log('log 33333!')
-}, 1000)
 
 const shouldInitDb = false
 if (shouldInitDb) {
@@ -26,23 +20,9 @@ if (shouldInitDb) {
 }
 
 const transactions = getTransactions()
-console.log('12222!!!', { transactions })
-
 const accounts = getAccounts()
-console.log({ accounts })
-
-const resolvers: Resolvers = {
-  Query: {
-    books: () => {
-      return [
-        {
-          title: 'The Awakening',
-          author: 'Kate Chopin',
-        },
-      ]
-    },
-  },
-}
+const categories = getCategories()
+console.log({ transactions, accounts, categories })
 
 const server = new ApolloServer<BaseContext>({
   typeDefs,
