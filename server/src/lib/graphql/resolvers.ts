@@ -1,8 +1,9 @@
-import { createTransactionSchema, updateTransactionSchema } from '../db/schemas'
+import { updateTransactionSchema } from '../db/schemas'
+import entitiesHandler from './resolversHandler'
 
 import { Resolvers } from '@/lib/codegen/__generated__/resolvers-types'
 import {
-  createTransaction,
+  deleteTransaction,
   getAccounts,
   getCategories,
   getTransactionById,
@@ -75,32 +76,12 @@ const resolvers: Resolvers = {
       return transactions.length > 0 ? transactions : null
     },
   },
+
   Mutation: {
     createTransaction: (parent, args) => {
-      const { amount, date } = args.transaction
+      const { transaction: newTransaction } = args
 
-      const newTransaction = {
-        amount: amount ? amount : 0,
-        date: date ? new Date(date) : new Date().toISOString(),
-        ...args.transaction,
-      }
-
-      const {
-        success,
-        error,
-        data: validData,
-      } = createTransactionSchema.safeParse(newTransaction)
-
-      if (!success) {
-        throw new Error(`Invalid input: ${error}`)
-      }
-
-      const dbResult = createTransaction(validData)
-
-      return {
-        ...validData,
-        id: Number(dbResult.lastInsertRowid),
-      }
+      return entitiesHandler.create('transaction', newTransaction)
     },
     updateTransaction: (parent, args) => {
       const { id, transaction: fieldsToUpdate } = args
@@ -124,6 +105,19 @@ const resolvers: Resolvers = {
       }
 
       return updatedTransaction
+    },
+    deleteTransaction: (parent, args) => {
+      const { id } = args
+
+      deleteTransaction(id)
+
+      return id
+    },
+
+    createCategory: (parent, args) => {
+      const { category: newCategory } = args
+
+      return entitiesHandler.create('category', newCategory)
     },
   },
 }
