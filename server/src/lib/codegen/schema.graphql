@@ -57,16 +57,36 @@ input UpdateTransaction {
   accountId: Int
 }
 
+input CreateCategory {
+  name: String!
+  description: String
+}
+
+input UpdateCategory {
+  name: String
+  description: String
+}
+
+input CreateAccount {
+  name: String!
+  isDefault: Boolean
+}
+
+input UpdateAccount {
+  name: String
+  isDefault: Boolean
+}
+
 type Mutation {
   createTransaction(transaction: CreateTransaction!): Transaction
   updateTransaction(id: Int!, transaction: UpdateTransaction!): Transaction
-  deleteTransaction(id: Int!): Transaction
+  deleteTransaction(id: Int!): Int
 
-  createCategory(name: String, description: String): Category
-  updateCategory(id: Int!, name: String, description: String): Category
+  createCategory(category: CreateCategory!): Category
+  updateCategory(id: Int!, category: UpdateCategory): Category
   deleteCategory(id: Int!): Category
 
-  createAccount(name: String, isDefault: Boolean): Account
-  updateAccount(id: Int!, name: String, isDefault: Boolean): Account
+  createAccount(account: CreateAccount): Account
+  updateAccount(id: Int!, account: UpdateAccount): Account
   deleteAccount(id: Int!): Account
 }

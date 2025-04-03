@@ -32,6 +32,16 @@ export type Category = {
   transactions?: Maybe<Array<Maybe<Transaction>>>;
 };
 
+export type CreateAccount = {
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type CreateCategory = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
 export type CreateTransaction = {
   accountId: Scalars['Int']['input'];
   amount?: InputMaybe<Scalars['Float']['input']>;
@@ -48,7 +58,7 @@ export type Mutation = {
   createTransaction?: Maybe<Transaction>;
   deleteAccount?: Maybe<Account>;
   deleteCategory?: Maybe<Category>;
-  deleteTransaction?: Maybe<Transaction>;
+  deleteTransaction?: Maybe<Scalars['Int']['output']>;
   updateAccount?: Maybe<Account>;
   updateCategory?: Maybe<Category>;
   updateTransaction?: Maybe<Transaction>;
@@ -56,14 +66,12 @@ export type Mutation = {
 
 
 export type MutationCreateAccountArgs = {
-  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  account?: InputMaybe<CreateAccount>;
 };
 
 
 export type MutationCreateCategoryArgs = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  category: CreateCategory;
 };
 
 
@@ -88,16 +96,14 @@ export type MutationDeleteTransactionArgs = {
 
 
 export type MutationUpdateAccountArgs = {
+  account?: InputMaybe<UpdateAccount>;
   id: Scalars['Int']['input'];
-  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type MutationUpdateCategoryArgs = {
-  description?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<UpdateCategory>;
   id: Scalars['Int']['input'];
-  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -142,6 +148,16 @@ export type Transaction = {
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   title?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateAccount = {
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateCategory = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateTransaction = {
@@ -227,6 +243,8 @@ export type ResolversTypes = {
   Account: ResolverTypeWrapper<Account>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Category: ResolverTypeWrapper<Category>;
+  CreateAccount: CreateAccount;
+  CreateCategory: CreateCategory;
   CreateTransaction: CreateTransaction;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
@@ -234,6 +252,8 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Transaction: ResolverTypeWrapper<Transaction>;
+  UpdateAccount: UpdateAccount;
+  UpdateCategory: UpdateCategory;
   UpdateTransaction: UpdateTransaction;
 };
 
@@ -242,6 +262,8 @@ export type ResolversParentTypes = {
   Account: Account;
   Boolean: Scalars['Boolean']['output'];
   Category: Category;
+  CreateAccount: CreateAccount;
+  CreateCategory: CreateCategory;
   CreateTransaction: CreateTransaction;
   Float: Scalars['Float']['output'];
   Int: Scalars['Int']['output'];
@@ -249,6 +271,8 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   Transaction: Transaction;
+  UpdateAccount: UpdateAccount;
+  UpdateCategory: UpdateCategory;
   UpdateTransaction: UpdateTransaction;
 };
 
@@ -270,11 +294,11 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createAccount?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, Partial<MutationCreateAccountArgs>>;
-  createCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, Partial<MutationCreateCategoryArgs>>;
+  createCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationCreateCategoryArgs, 'category'>>;
   createTransaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationCreateTransactionArgs, 'transaction'>>;
   deleteAccount?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<MutationDeleteAccountArgs, 'id'>>;
   deleteCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationDeleteCategoryArgs, 'id'>>;
-  deleteTransaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationDeleteTransactionArgs, 'id'>>;
+  deleteTransaction?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<MutationDeleteTransactionArgs, 'id'>>;
   updateAccount?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<MutationUpdateAccountArgs, 'id'>>;
   updateCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationUpdateCategoryArgs, 'id'>>;
   updateTransaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationUpdateTransactionArgs, 'id' | 'transaction'>>;
