@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Test, test } from '@eporg/react-components/main';
+import { Test, test } from '@eporg/react-components/ep';
 import { useQuery } from '@tanstack/react-query';
 
 import { graphql } from '@/lib/codegen/graphql';
