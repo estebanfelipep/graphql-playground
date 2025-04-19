@@ -3,22 +3,87 @@ schema {
   mutation: Mutation
 }
 
-type AddBookMutationResponse {
-  book: Book
-  code: String!
-  message: String!
-  success: Boolean!
+type Account {
+  id: Int!
+  isDefault: Boolean!
+  name: String!
+  transactions: [Transaction]
 }
 
-type Book {
-  author: String
+type Category {
+  description: String
+  id: Int!
+  name: String!
+  transactions: [Transaction]
+}
+
+input CreateAccount {
+  isDefault: Boolean
+  name: String!
+}
+
+input CreateCategory {
+  description: String
+  name: String!
+}
+
+input CreateTransaction {
+  accountId: Int!
+  amount: Float
+  categoryId: Int!
+  date: String
+  description: String
   title: String
 }
 
 type Mutation {
-  addBook(author: String, title: String): AddBookMutationResponse
+  createAccount(account: CreateAccount): Account
+  createCategory(category: CreateCategory!): Category
+  createTransaction(transaction: CreateTransaction!): Transaction
+  deleteAccount(id: Int!): Account
+  deleteCategory(id: Int!): Category
+  deleteTransaction(id: Int!): Int
+  updateAccount(account: UpdateAccount, id: Int!): Account
+  updateCategory(category: UpdateCategory, id: Int!): Category
+  updateTransaction(id: Int!, transaction: UpdateTransaction!): Transaction
 }
 
 type Query {
-  books: [Book]
+  account(id: Int!): Account
+  accounts: [Account]
+  categories: [Category]
+  category(id: Int!): Category
+  transaction(id: Int!): Transaction
+  transactions: [Transaction]
+}
+
+type Transaction {
+  account: Account
+  accountId: Int!
+  amount: Float!
+  category: Category
+  categoryId: Int!
+  date: String!
+  description: String
+  id: Int!
+  title: String
+}
+
+input UpdateAccount {
+  isDefault: Boolean
+  name: String
+}
+
+input UpdateCategory {
+  description: String
+  name: String
+}
+
+input UpdateTransaction {
+  accountId: Int
+  amount: Float
+  categoryId: Int
+  date: String
+  description: String
+  title: String
 }

@@ -6,9 +6,8 @@ import fetchGraphQl from '@/lib/utils/fetchGraphQl';
 
 const BooksQuery = graphql(`
   query BookQuery {
-    books {
-      title
-      author
+    transactions {
+      id
     }
   }
 `);
@@ -22,7 +21,7 @@ function App() {
     queryFn: () => fetchGraphQl(BooksQuery),
   });
 
-  console.log(data?.books ? data?.books[0]?.author : 1);
+  console.log(data?.transactions ? data?.transactions[0]?.id : 1);
 
   useEffect(() => {
     const makeCall = async () => {
@@ -30,9 +29,13 @@ function App() {
         const response = await fetchGraphQl(BooksQuery);
         console.log({ response });
 
-        if (response && response.books && response.books.length > 0) {
-          const firstWord = response.books[0]?.title;
-          console.log(firstWord);
+        if (
+          response &&
+          response.transactions &&
+          response.transactions.length > 0
+        ) {
+          const firstId = response.transactions[0]?.id;
+          console.log(firstId);
         } else {
           console.log('No books found in response');
         }

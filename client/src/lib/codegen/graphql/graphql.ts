@@ -16,40 +16,163 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type AddBookMutationResponse = {
-  __typename?: 'AddBookMutationResponse';
-  book?: Maybe<Book>;
-  code: Scalars['String']['output'];
-  message: Scalars['String']['output'];
-  success: Scalars['Boolean']['output'];
+export type Account = {
+  __typename?: 'Account';
+  id: Scalars['Int']['output'];
+  isDefault: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  transactions?: Maybe<Array<Maybe<Transaction>>>;
 };
 
-export type Book = {
-  __typename?: 'Book';
-  author?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
+export type Category = {
+  __typename?: 'Category';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  transactions?: Maybe<Array<Maybe<Transaction>>>;
+};
+
+export type CreateAccount = {
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type CreateCategory = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type CreateTransaction = {
+  accountId: Scalars['Int']['input'];
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  categoryId: Scalars['Int']['input'];
+  date?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addBook?: Maybe<AddBookMutationResponse>;
+  createAccount?: Maybe<Account>;
+  createCategory?: Maybe<Category>;
+  createTransaction?: Maybe<Transaction>;
+  deleteAccount?: Maybe<Account>;
+  deleteCategory?: Maybe<Category>;
+  deleteTransaction?: Maybe<Scalars['Int']['output']>;
+  updateAccount?: Maybe<Account>;
+  updateCategory?: Maybe<Category>;
+  updateTransaction?: Maybe<Transaction>;
 };
 
 
-export type MutationAddBookArgs = {
-  author?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
+export type MutationCreateAccountArgs = {
+  account?: InputMaybe<CreateAccount>;
+};
+
+
+export type MutationCreateCategoryArgs = {
+  category: CreateCategory;
+};
+
+
+export type MutationCreateTransactionArgs = {
+  transaction: CreateTransaction;
+};
+
+
+export type MutationDeleteAccountArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteCategoryArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteTransactionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationUpdateAccountArgs = {
+  account?: InputMaybe<UpdateAccount>;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationUpdateCategoryArgs = {
+  category?: InputMaybe<UpdateCategory>;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationUpdateTransactionArgs = {
+  id: Scalars['Int']['input'];
+  transaction: UpdateTransaction;
 };
 
 export type Query = {
   __typename?: 'Query';
-  books?: Maybe<Array<Maybe<Book>>>;
+  account?: Maybe<Account>;
+  accounts?: Maybe<Array<Maybe<Account>>>;
+  categories?: Maybe<Array<Maybe<Category>>>;
+  category?: Maybe<Category>;
+  transaction?: Maybe<Transaction>;
+  transactions?: Maybe<Array<Maybe<Transaction>>>;
+};
+
+
+export type QueryAccountArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryCategoryArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryTransactionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+export type Transaction = {
+  __typename?: 'Transaction';
+  account?: Maybe<Account>;
+  accountId: Scalars['Int']['output'];
+  amount: Scalars['Float']['output'];
+  category?: Maybe<Category>;
+  categoryId: Scalars['Int']['output'];
+  date: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateAccount = {
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateCategory = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateTransaction = {
+  accountId?: InputMaybe<Scalars['Int']['input']>;
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type BookQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BookQueryQuery = { __typename?: 'Query', books?: Array<{ __typename?: 'Book', title?: string | null, author?: string | null } | null> | null };
+export type BookQueryQuery = { __typename?: 'Query', transactions?: Array<{ __typename?: 'Transaction', id: number } | null> | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -72,9 +195,8 @@ export class TypedDocumentString<TResult, TVariables>
 
 export const BookQueryDocument = new TypedDocumentString(`
     query BookQuery {
-  books {
-    title
-    author
+  transactions {
+    id
   }
 }
     `) as unknown as TypedDocumentString<BookQueryQuery, BookQueryQueryVariables>;
