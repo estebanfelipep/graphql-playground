@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { test, Test } from '@eporg/react-components/main';
+import { Test, test } from '@eporg/react-components/main';
 import { useQuery } from '@tanstack/react-query';
 
 import { graphql } from '@/lib/codegen/graphql';
@@ -52,7 +52,7 @@ function App() {
 
   return (
     <>
-      <div>There are {count} people</div>
+      <div className="text-cyan-400">There are {count} people</div>
       <button onClick={() => setCount((count) => count + 1)}>
         count is {count}
       </button>
