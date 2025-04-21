@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Test, test } from '@eporg/react-components/ep';
+import Test from '@eporg/react-components/ep/Test';
 import { useQuery } from '@tanstack/react-query';
 
 import { graphql } from '@/lib/codegen/graphql';
@@ -15,8 +15,6 @@ const BooksQuery = graphql(`
 
 function App() {
   const [count, setCount] = useState(0);
-
-  console.log(test());
 
   // Queries
   const { data } = useQuery({
@@ -52,7 +50,7 @@ function App() {
 
   return (
     <>
-      <div className="text-cyan-400">There are {count} people</div>
+      <div className="bg-amber-200 text-cyan-400">There are {count} people</div>
       <button onClick={() => setCount((count) => count + 1)}>
         count is {count}
       </button>
