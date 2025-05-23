@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Test from '@eporg/react-components/ep/Test';
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,6 +9,9 @@ const BooksQuery = graphql(`
   query BookQuery {
     transactions {
       id
+      account {
+        id
+      }
     }
   }
 `);
@@ -22,31 +25,33 @@ function App() {
     queryFn: () => fetchGraphQl(BooksQuery),
   });
 
-  console.log(data?.transactions ? data?.transactions[0]?.id : 1);
+  if (data) {
+    console.log('log', data, data.transactions![0]?.id);
+  }
 
-  useEffect(() => {
-    const makeCall = async () => {
-      try {
-        const response = await fetchGraphQl(BooksQuery);
-        console.log({ response });
+  // useEffect(() => {
+  //   const makeCall = async () => {
+  //     try {
+  //       const response = await fetchGraphQl(BooksQuery);
+  //       console.log({ response });
 
-        if (
-          response &&
-          response.transactions &&
-          response.transactions.length > 0
-        ) {
-          const firstId = response.transactions[0]?.id;
-          console.log(firstId);
-        } else {
-          console.log('No books found in response');
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
+  //       if (
+  //         response &&
+  //         response.transactions &&
+  //         response.transactions.length > 0
+  //       ) {
+  //         const firstId = response.transactions[0]?.id;
+  //         console.log(firstId);
+  //       } else {
+  //         console.log('No books found in response');
+  //       }
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
 
-    makeCall();
-  }, []);
+  //   makeCall();
+  // }, []);
 
   return (
     <>

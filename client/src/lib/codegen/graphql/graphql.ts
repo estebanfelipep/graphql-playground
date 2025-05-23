@@ -172,7 +172,7 @@ export type UpdateTransaction = {
 export type BookQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BookQueryQuery = { __typename?: 'Query', transactions?: Array<{ __typename?: 'Transaction', id: number } | null> | null };
+export type BookQueryQuery = { __typename?: 'Query', transactions?: Array<{ __typename?: 'Transaction', id: number, account?: { __typename?: 'Account', id: number } | null } | null> | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -197,6 +197,9 @@ export const BookQueryDocument = new TypedDocumentString(`
     query BookQuery {
   transactions {
     id
+    account {
+      id
+    }
   }
 }
     `) as unknown as TypedDocumentString<BookQueryQuery, BookQueryQueryVariables>;
