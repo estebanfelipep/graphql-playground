@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Test from '@eporg/react-components/ep/Test';
 import { useQuery } from '@tanstack/react-query';
 
 import { graphql } from '@/lib/codegen/graphql';
 import fetchGraphQl from '@/lib/utils/fetchGraphQl';
+import Button from '@eporg/react-ui/components/Button';
 
 const BooksQuery = graphql(`
   query BookQuery {
@@ -59,7 +59,7 @@ function App() {
       <button onClick={() => setCount((count) => count + 1)}>
         count is {count}
       </button>
-      <Test />
+      <Button onClick={() => setCount((count) => count + 1)}>Increment</Button>
     </>
   );
 }
